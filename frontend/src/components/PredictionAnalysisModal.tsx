@@ -238,9 +238,7 @@ export default function PredictionAnalysisModal({
                 <span className="font-semibold text-green-800 text-xs">analysis complete</span>
               </div>
               <p className="text-xs text-green-700">
-                predictions have been generated and will appear on the map. 
-                predictions have been generated based on real-time analysis 
-                in the selected region and timeframe.
+                predictions are being generated and will shortly be shown on the map
               </p>
             </div>
           )}

@@ -109,8 +109,11 @@ export default function FloatingChatBot() {
   }
 
   const formatMessage = (content: string) => {
+    // Check if this is a report generation message that should have a download button
+    const isReportMessage = content.includes('Fire Prediction Report') && content.includes('generated')
+    
     // Simple formatting for better readability
-    return content
+    const formattedContent = content
       .split('\n')
       .map((line, index) => (
         <div key={index} className={line.trim() === '' ? 'h-2' : ''}>
@@ -118,30 +121,119 @@ export default function FloatingChatBot() {
             <div className="font-medium text-blue-600">{line}</div>
           ) : line.startsWith('**') && line.endsWith('**') ? (
             <div className="font-semibold">{line.replace(/\*\*/g, '')}</div>
-          ) : line.startsWith('- ') ? (
+          ) : line.startsWith('- ') || line.startsWith('• ') ? (
             <div className="ml-4 text-gray-700">{line}</div>
+          ) : line.startsWith('✅') ? (
+            <div className="text-green-600 font-medium">{line}</div>
           ) : (
             <div>{line}</div>
           )}
         </div>
       ))
+
+    // Add download button for report messages OR prediction results
+    const showDownloadButton = (isReportMessage && !content.includes('Downloaded Successfully')) || 
+                               (content.includes('highest probability fire predictions') && content.includes('Probability:'))
+
+    if (showDownloadButton) {
+      return (
+        <div>
+          {formattedContent}
+          <div className="mt-3 pt-3 border-t border-gray-200">
+            <button
+              onClick={downloadPredictionReport}
+              className="flex items-center space-x-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors text-sm font-medium"
+            >
+              <FileText className="w-4 h-4" />
+              <span>Download PDF Report</span>
+            </button>
+            <p className="text-xs text-gray-500 mt-2">
+              Generate official PDF report with these predictions for authorities
+            </p>
+          </div>
+        </div>
+      )
+    }
+
+    return <div>{formattedContent}</div>
+  }
+
+  const downloadPredictionReport = async () => {
+    // Add loading message
+    const loadingMessage: ChatMessage = {
+      id: Date.now().toString(),
+      role: 'assistant',
+      content: '🔄 **Generating Fire Prediction Report...**\n\nPlease wait while I generate a comprehensive PDF report with ML predictions. This may take a few seconds.\n\n⏳ Analyzing fire risk data...\n⏳ Processing ML predictions...\n⏳ Creating authority-ready document...',
+      timestamp: new Date().toISOString()
+    }
+    setMessages(prev => [...prev, loadingMessage])
+
+    try {
+      const response = await fetch('http://localhost:8000/api/chat/generate-prediction-report', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          format: 'pdf'
+        })
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to generate report')
+      }
+
+      const blob = await response.blob()
+      const url = window.URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.style.display = 'none'
+      a.href = url
+      a.download = `fire_prediction_report_${new Date().toISOString().split('T')[0]}.pdf`
+      document.body.appendChild(a)
+      a.click()
+      window.URL.revokeObjectURL(url)
+      document.body.removeChild(a)
+
+      // Remove loading message and add success message
+      setMessages(prev => {
+        const filtered = prev.filter(msg => msg.id !== loadingMessage.id)
+        return [...filtered, {
+          id: (Date.now() + 1).toString(),
+          role: 'assistant',
+          content: '📄 **Fire Prediction Report Downloaded Successfully**\n\nA comprehensive fire prediction report has been generated and downloaded to your device. This PDF report contains:\n\n✅ ML-based fire risk predictions with live data\n✅ Risk level distribution analysis\n✅ Top high-risk locations with precise coordinates\n✅ Authority recommendations and action plans\n✅ Emergency response protocols\n\n**File:** fire_prediction_report_' + new Date().toISOString().split('T')[0] + '.pdf\n**Status:** Ready for distribution to authorities and emergency services\n\nYou can now send this report to local fire departments and emergency response teams.',
+          timestamp: new Date().toISOString()
+        }]
+      })
+    } catch (error) {
+      console.error('Error downloading report:', error)
+      // Remove loading message and add error message
+      setMessages(prev => {
+        const filtered = prev.filter(msg => msg.id !== loadingMessage.id)
+        return [...filtered, {
+          id: (Date.now() + 1).toString(),
+          role: 'assistant',
+          content: '❌ **Download Failed**\n\nSorry, I could not download the prediction report. This might be due to:\n\n• Backend server not responding\n• Network connectivity issues\n• PDF generation timeout\n\nPlease try again in a moment or check if the backend is running.',
+          timestamp: new Date().toISOString()
+        }]
+      })
+    }
   }
 
   const quickActions = [
     {
-      label: 'Generate Report',
+      label: 'Download Report',
       icon: FileText,
-      action: () => setInputMessage('Generate a fire report for authorities')
+      action: downloadPredictionReport
     },
     {
-      label: 'Fire Statistics',
+      label: 'Punjab Predictions',
       icon: BarChart3,
-      action: () => setInputMessage('Show me fire statistics and summary')
+      action: () => setInputMessage('Show me the top 5 highest probability predictions for Punjab')
     },
     {
-      label: 'Top 5 Fires',
+      label: 'All Predictions',
       icon: Bot,
-      action: () => setInputMessage('Show me the top 5 highest power fires')
+      action: () => setInputMessage('Show me the top 5 highest probability predictions for all northern india')
     }
   ]
 

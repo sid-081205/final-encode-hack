@@ -1,10 +1,12 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { Plus, AlertTriangle } from 'lucide-react'
 import FireMap from '@/components/FireMap'
 import FilterPanel from '@/components/FilterPanel'
 import RecentFiresPanel from '@/components/RecentFiresPanel'
 import MapStats from '@/components/MapStats'
+import UserReportForm, { UserReportData } from '@/components/UserReportForm'
 import { apiClient, FireData, FireFilterRequest } from '@/lib/api'
 
 export interface FilterState {
@@ -33,6 +35,9 @@ export default function FireDetection() {
   })
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [showReportForm, setShowReportForm] = useState(false)
+  const [reportLoading, setReportLoading] = useState(false)
+  const [reportSuccess, setReportSuccess] = useState<string | null>(null)
 
   useEffect(() => {
     // Load initial data
@@ -95,15 +100,60 @@ export default function FireDetection() {
     }
   }
 
+  const handleUserReport = async (reportData: UserReportData) => {
+    setReportLoading(true)
+    setError(null)
+    
+    try {
+      const response = await apiClient.reportFire(reportData)
+      setReportSuccess(`Report submitted successfully! Report ID: ${response.id}`)
+      setShowReportForm(false)
+      
+      // If user reports are enabled, refresh the data to show the new report
+      if (filters.sources['User Reported']) {
+        handleRefresh()
+      }
+      
+      // Clear success message after 5 seconds
+      setTimeout(() => setReportSuccess(null), 5000)
+      
+    } catch (err) {
+      console.error('Error submitting report:', err)
+      setError(err instanceof Error ? err.message : 'Failed to submit report')
+    } finally {
+      setReportLoading(false)
+    }
+  }
+
   return (
     <div className="min-h-screen bg-ash-light">
       <div className="container mx-auto px-6 py-8">
         <div className="mb-6">
-          <h1 className="text-3xl font-bold text-charcoal mb-2">fire detection</h1>
-          <p className="text-smoke-gray">real-time monitoring of active fires in northern india</p>
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-3xl font-bold text-charcoal mb-2">fire detection</h1>
+              <p className="text-smoke-gray">real-time monitoring of active fires in northern india</p>
+            </div>
+            
+            {/* Report Button */}
+            <button
+              onClick={() => setShowReportForm(true)}
+              className="flex items-center space-x-2 bg-fire-red hover:bg-fire-red/90 text-white px-4 py-2 rounded-lg font-medium transition-colors shadow-sm"
+            >
+              <Plus className="w-5 h-5" />
+              <span>Report Fire</span>
+            </button>
+          </div>
+          
           {error && (
             <div className="mt-3 p-3 bg-red-50 border border-red-200 rounded-lg">
               <p className="text-red-700 text-sm">⚠️ {error}</p>
+            </div>
+          )}
+          
+          {reportSuccess && (
+            <div className="mt-3 p-3 bg-green-50 border border-green-200 rounded-lg">
+              <p className="text-green-700 text-sm">✅ {reportSuccess}</p>
             </div>
           )}
         </div>
@@ -135,6 +185,14 @@ export default function FireDetection() {
           </div>
         </div>
       </div>
+      
+      {/* User Report Form Modal */}
+      <UserReportForm
+        isOpen={showReportForm}
+        onClose={() => setShowReportForm(false)}
+        onSubmit={handleUserReport}
+        loading={reportLoading}
+      />
     </div>
   )
 }

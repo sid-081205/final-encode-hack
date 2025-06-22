@@ -536,6 +536,53 @@ h1, h2, h3, h4, h5, h6{
   --tw-bg-opacity: 1;
   background-color: rgb(255 56 92 / var(--tw-bg-opacity, 1));
 }
+.input-field{
+  width: 100%;
+  border-radius: 0.5rem;
+  border-width: 1px;
+  --tw-border-opacity: 1;
+  border-color: rgb(209 213 219 / var(--tw-border-opacity, 1));
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+.input-field:focus{
+  --tw-border-opacity: 1;
+  border-color: rgb(255 56 92 / var(--tw-border-opacity, 1));
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+  --tw-ring-color: rgb(255 56 92 / 0.2);
+}
+.modal-overlay {
+    z-index: 10000 !important;
+    position: fixed !important;
+  }
+.modal-content {
+    z-index: 10001 !important;
+    position: relative !important;
+  }
+/* Ensure Leaflet map containers don't interfere with modals */
+/* Hide any text labels that might appear on prediction markers */
+.leaflet-tooltip,
+  .leaflet-tooltip-pane,
+  .prediction-marker .leaflet-tooltip,
+  .leaflet-marker-pane .leaflet-tooltip {
+    display: none !important;
+  }
+/* Ensure prediction markers don't show any text overlays */
+.prediction-marker::before,
+  .prediction-marker::after {
+    display: none !important;
+  }
+/* Hide any text that might be rendered as marker labels */
+/* Hide any div overlays that might contain text */
 .btn-primary{
   border-radius: 0.5rem;
   --tw-bg-opacity: 1;
@@ -736,6 +783,9 @@ h1, h2, h3, h4, h5, h6{
 .h-2{
   height: 0.5rem;
 }
+.h-24{
+  height: 6rem;
+}
 .h-3{
   height: 0.75rem;
 }
@@ -763,11 +813,17 @@ h1, h2, h3, h4, h5, h6{
 .h-full{
   height: 100%;
 }
+.h-px{
+  height: 1px;
+}
 .max-h-\[500px\]{
   max-height: 500px;
 }
 .max-h-\[80vh\]{
   max-height: 80vh;
+}
+.max-h-\[90vh\]{
+  max-height: 90vh;
 }
 .min-h-\[140px\]{
   min-height: 140px;
@@ -838,6 +894,9 @@ h1, h2, h3, h4, h5, h6{
 .max-w-full{
   max-width: 100%;
 }
+.max-w-md{
+  max-width: 28rem;
+}
 .flex-1{
   flex: 1 1 0%;
 }
@@ -890,6 +949,9 @@ h1, h2, h3, h4, h5, h6{
 }
 .cursor-pointer{
   cursor: pointer;
+}
+.resize-none{
+  resize: none;
 }
 .appearance-none{
   -webkit-appearance: none;
@@ -1093,6 +1155,10 @@ h1, h2, h3, h4, h5, h6{
   --tw-border-opacity: 1;
   border-color: rgb(254 202 202 / var(--tw-border-opacity, 1));
 }
+.border-red-300{
+  --tw-border-opacity: 1;
+  border-color: rgb(252 165 165 / var(--tw-border-opacity, 1));
+}
 .border-yellow-200{
   --tw-border-opacity: 1;
   border-color: rgb(254 240 138 / var(--tw-border-opacity, 1));
@@ -1100,6 +1166,10 @@ h1, h2, h3, h4, h5, h6{
 .bg-ash-light{
   --tw-bg-opacity: 1;
   background-color: rgb(247 247 247 / var(--tw-bg-opacity, 1));
+}
+.bg-black{
+  --tw-bg-opacity: 1;
+  background-color: rgb(0 0 0 / var(--tw-bg-opacity, 1));
 }
 .bg-black\/50{
   background-color: rgb(0 0 0 / 0.5);
@@ -1238,6 +1308,9 @@ h1, h2, h3, h4, h5, h6{
   --tw-bg-opacity: 1;
   background-color: rgb(202 138 4 / var(--tw-bg-opacity, 1));
 }
+.bg-opacity-50{
+  --tw-bg-opacity: 0.5;
+}
 .bg-gradient-to-br{
   background-image: linear-gradient(to bottom right, var(--tw-gradient-stops));
 }
@@ -1335,6 +1408,12 @@ h1, h2, h3, h4, h5, h6{
 }
 .pt-16{
   padding-top: 4rem;
+}
+.pt-3{
+  padding-top: 0.75rem;
+}
+.pt-4{
+  padding-top: 1rem;
 }
 .text-center{
   text-align: center;
@@ -1618,9 +1697,33 @@ h1, h2, h3, h4, h5, h6{
   background-color: rgb(29 78 216 / var(--tw-bg-opacity, 1));
 }
 
+.hover\:bg-fire-red\/90:hover{
+  background-color: rgb(255 56 92 / 0.9);
+}
+
+.hover\:bg-gray-100:hover{
+  --tw-bg-opacity: 1;
+  background-color: rgb(243 244 246 / var(--tw-bg-opacity, 1));
+}
+
 .hover\:bg-gray-200:hover{
   --tw-bg-opacity: 1;
   background-color: rgb(229 231 235 / var(--tw-bg-opacity, 1));
+}
+
+.hover\:bg-gray-50:hover{
+  --tw-bg-opacity: 1;
+  background-color: rgb(249 250 251 / var(--tw-bg-opacity, 1));
+}
+
+.hover\:bg-red-700:hover{
+  --tw-bg-opacity: 1;
+  background-color: rgb(185 28 28 / var(--tw-bg-opacity, 1));
+}
+
+.hover\:text-gray-900:hover{
+  --tw-text-opacity: 1;
+  color: rgb(17 24 39 / var(--tw-text-opacity, 1));
 }
 
 .hover\:shadow-xl:hover{

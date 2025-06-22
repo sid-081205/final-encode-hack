@@ -1,5 +1,6 @@
 {
-  "/fire-prediction/page": "app/fire-prediction/page.js",
+  "/awareness/page": "app/awareness/page.js",
   "/page": "app/page.js",
-  "/fire-detection/page": "app/fire-detection/page.js"
+  "/fire-detection/page": "app/fire-detection/page.js",
+  "/fire-prediction/page": "app/fire-prediction/page.js"
 }

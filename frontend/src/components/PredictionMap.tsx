@@ -121,6 +121,7 @@ export default function PredictionMap({ predictions }: PredictionMapProps) {
           className="prediction-marker"
           bubblingMouseEvents={false}
           interactive={true}
+          attribution=""
         >
           <Popup>
             <div className="p-2 min-w-[220px]">
@@ -140,8 +141,12 @@ export default function PredictionMap({ predictions }: PredictionMapProps) {
                 <div><strong>region:</strong> {prediction.region.replace('-', ' ')}</div>
                 <div><strong>fire probability:</strong> {prediction.probability}%</div>
                 <div><strong>model confidence:</strong> {prediction.confidence}%</div>
-                <div><strong>predicted date:</strong> {formatDate(prediction.predictedDate)}</div>
-                <div><strong>generated:</strong> {formatCreatedDate(prediction.createdAt)}</div>
+                {formatDate(prediction.predictedDate) !== 'not available' && (
+                  <div><strong>predicted date:</strong> {formatDate(prediction.predictedDate)}</div>
+                )}
+                {formatCreatedDate(prediction.createdAt) !== 'not available' && (
+                  <div><strong>generated:</strong> {formatCreatedDate(prediction.createdAt)}</div>
+                )}
                 
                 {prediction.factors.length > 0 && (
                   <div className="mt-2">

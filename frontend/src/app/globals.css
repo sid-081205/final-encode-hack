@@ -86,6 +86,58 @@
     @apply w-3 h-3 bg-fire-red rounded-full animate-pulse-fire;
   }
   
+  .input-field {
+    @apply w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-fire-red/20 focus:border-fire-red transition-colors;
+  }
+
+  .modal-overlay {
+    z-index: 10000 !important;
+    position: fixed !important;
+  }
+
+  .modal-content {
+    z-index: 10001 !important;
+    position: relative !important;
+  }
+
+  /* Ensure Leaflet map containers don't interfere with modals */
+  .leaflet-container {
+    z-index: 1 !important;
+  }
+
+  .leaflet-control-container {
+    z-index: 2 !important;
+  }
+
+  /* Hide any text labels that might appear on prediction markers */
+  .leaflet-tooltip,
+  .leaflet-tooltip-pane,
+  .prediction-marker .leaflet-tooltip,
+  .leaflet-marker-pane .leaflet-tooltip {
+    display: none !important;
+  }
+
+  /* Ensure prediction markers don't show any text overlays */
+  .prediction-marker::before,
+  .prediction-marker::after {
+    display: none !important;
+  }
+
+  /* Hide any text that might be rendered as marker labels */
+  .leaflet-marker-pane .leaflet-marker-icon[title*="predicted"],
+  .leaflet-marker-pane .leaflet-marker-icon[title*="generated"],
+  .leaflet-marker-pane .leaflet-marker-icon[title*="not available"] {
+    text-indent: -9999px !important;
+    overflow: hidden !important;
+  }
+
+  /* Hide any div overlays that might contain text */
+  .leaflet-overlay-pane div[style*="predicted"],
+  .leaflet-overlay-pane div[style*="generated"],
+  .leaflet-overlay-pane div[style*="not available"] {
+    display: none !important;
+  }
+  
   .btn-primary {
     @apply bg-fire-red text-white px-6 py-3 rounded-lg font-medium hover:bg-red-600 transition-colors duration-200;
   }

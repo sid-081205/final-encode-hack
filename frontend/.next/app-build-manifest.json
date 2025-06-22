@@ -22,6 +22,11 @@
       "static/chunks/main-app.js",
       "static/css/app/fire-prediction/page.css",
       "static/chunks/app/fire-prediction/page.js"
+    ],
+    "/awareness/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/awareness/page.js"
     ]
   }
 }

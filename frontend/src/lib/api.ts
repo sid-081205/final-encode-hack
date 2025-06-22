@@ -42,6 +42,39 @@ export interface ApiError {
   detail: string
 }
 
+export interface UserReportData {
+  latitude: number
+  longitude: number
+  severity: 'Low' | 'Medium' | 'High' | 'Critical'
+  description?: string
+  reporter_name?: string
+  reporter_contact?: string
+  location_name?: string
+  estimated_area?: number
+  smoke_visibility?: 'None' | 'Light' | 'Moderate' | 'Heavy'
+}
+
+export interface UserReportResponse {
+  id: string
+  latitude: number
+  longitude: number
+  severity: string
+  description?: string
+  reporter_name?: string
+  reporter_contact?: string
+  location_name?: string
+  state?: string
+  district?: string
+  estimated_area?: number
+  smoke_visibility?: string
+  fire_type: string
+  status: string
+  verified_by?: string
+  reported_at: string
+  verified_at?: string
+  resolved_at?: string
+}
+
 class ApiClient {
   private baseUrl: string
 
@@ -127,6 +160,25 @@ class ApiClient {
 
   async healthCheck() {
     return this.request('/api/fires/health')
+  }
+
+  // User reporting methods
+  async reportFire(reportData: UserReportData): Promise<UserReportResponse> {
+    return this.request<UserReportResponse>('/api/fires/report', {
+      method: 'POST',
+      body: JSON.stringify(reportData),
+    })
+  }
+
+  async getUserReports(region: string = 'all-northern-india', statusFilter: string = 'all', limit: number = 100): Promise<UserReportResponse[]> {
+    return this.request<UserReportResponse[]>(`/api/fires/reports?region=${encodeURIComponent(region)}&status_filter=${encodeURIComponent(statusFilter)}&limit=${limit}`)
+  }
+
+  async verifyReport(reportId: string, verifiedBy: string): Promise<UserReportResponse> {
+    return this.request<UserReportResponse>(`/api/fires/reports/${reportId}/verify`, {
+      method: 'PUT',
+      body: JSON.stringify({ verified_by: verifiedBy }),
+    })
   }
 }
 

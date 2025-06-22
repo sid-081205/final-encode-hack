@@ -1,6 +1,6 @@
 'use client'
 
-import { Flame, TrendingUp, BookOpen } from 'lucide-react'
+import { Flame, TrendingUp, BookOpen, MessageCircle } from 'lucide-react'
 import Link from 'next/link'
 
 export default function Home() {
@@ -74,7 +74,7 @@ export default function Home() {
 
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
           <h2 className="text-2xl font-semibold mb-6 text-center">about the system</h2>
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid md:grid-cols-3 gap-8">
             <div>
               <h3 className="text-lg font-semibold mb-3">data sources</h3>
               <ul className="space-y-2 text-smoke-gray">
@@ -91,6 +91,19 @@ export default function Home() {
                 <li>• predictive risk modeling</li>
                 <li>• regional pattern analysis</li>
                 <li>• educational content delivery</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold mb-3 flex items-center">
+                <MessageCircle className="w-5 h-5 text-blue-600 mr-2" />
+                ai fire assistant
+              </h3>
+              <ul className="space-y-2 text-smoke-gray">
+                <li>• future fire prediction analysis</li>
+                <li>• downloadable authority reports</li>
+                <li>• statistical fire data insights</li>
+                <li>• automated severity calculations</li>
+                <li>• intelligent query processing</li>
               </ul>
             </div>
           </div>

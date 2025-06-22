@@ -4,10 +4,14 @@ from typing import List
 import logging
 
 from app.database.connection import get_database
-from app.models.fire import FireFilterRequest, FireFilterResponse, FireDetectionResponse
+from app.models.fire import FireFilterRequest, FireFilterResponse, FireDetectionResponse, UserReportedFireCreate, UserReportedFireResponse
 from app.services.fire_service import FireService
 from app.services.historical_fire_service import HistoricalFireService
 from app.utils.regions import get_available_regions
+from pydantic import BaseModel
+
+class VerifyReportRequest(BaseModel):
+    verified_by: str
 
 router = APIRouter(prefix="/api/fires", tags=["fires"])
 
@@ -145,6 +149,106 @@ async def get_available_date_range():
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Error getting date range: {str(e)}"
+        )
+
+@router.post("/report", response_model=UserReportedFireResponse)
+async def report_fire_incident(
+    report: UserReportedFireCreate,
+    db: Session = Depends(get_database)
+):
+    """
+    Report a stubble burning incident
+    
+    - **latitude**: Latitude coordinate of the incident
+    - **longitude**: Longitude coordinate of the incident  
+    - **severity**: Severity level (Low, Medium, High, Critical)
+    - **description**: Optional description of the incident
+    - **reporter_name**: Optional name of the person reporting
+    - **reporter_contact**: Optional contact information
+    - **location_name**: Optional location name or address
+    - **estimated_area**: Optional estimated area in hectares
+    - **smoke_visibility**: Optional smoke visibility level
+    """
+    try:
+        logger.info(f"User fire report received: {report.latitude}, {report.longitude}")
+        
+        fire_service = FireService(db)
+        reported_fire = fire_service.create_user_report(report)
+        
+        logger.info(f"User report created with ID: {reported_fire.id}")
+        
+        return reported_fire
+        
+    except Exception as e:
+        logger.error(f"Error creating user report: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Error creating report: {str(e)}"
+        )
+
+@router.get("/reports", response_model=List[UserReportedFireResponse])
+async def get_user_reports(
+    region: str = "all-northern-india",
+    status_filter: str = "all",
+    limit: int = 100,
+    db: Session = Depends(get_database)
+):
+    """
+    Get user-reported fire incidents
+    
+    - **region**: Geographic region to filter by
+    - **status_filter**: Status filter (all, reported, verified, resolved)
+    - **limit**: Maximum number of reports to return
+    """
+    try:
+        fire_service = FireService(db)
+        reports = fire_service.get_user_reports(
+            region=region,
+            status_filter=status_filter,
+            limit=limit
+        )
+        
+        logger.info(f"Retrieved {len(reports)} user reports for region {region}")
+        
+        return reports
+        
+    except Exception as e:
+        logger.error(f"Error getting user reports: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Error getting reports: {str(e)}"
+        )
+
+@router.put("/reports/{report_id}/verify")
+async def verify_report(
+    report_id: str,
+    request: VerifyReportRequest,
+    db: Session = Depends(get_database)
+):
+    """
+    Verify a user-reported incident (admin function)
+    """
+    try:
+        fire_service = FireService(db)
+        updated_report = fire_service.verify_user_report(report_id, request.verified_by)
+        
+        if not updated_report:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Report not found"
+            )
+        
+        logger.info(f"Report {report_id} verified by {request.verified_by}")
+        
+        return updated_report
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error verifying report: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Error verifying report: {str(e)}"
         )
 
 @router.get("/health")
