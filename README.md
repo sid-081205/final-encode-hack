@@ -20,6 +20,17 @@ An integrated platform that combines:
 - **Citizen reporting system** for community engagement
 - **Professional PDF reports** for authorities and emergency services
 
+## 📸 Screenshots
+
+### Fire Detection Dashboard
+![Fire Detection Dashboard](Screenshot%202025-06-22%20at%2011.58.12.png)
+
+### Fire Prediction Interface
+![Fire Prediction Interface](Screenshot%202025-06-22%20at%2011.58.24.png)
+
+### AI Chatbot & Analytics
+![AI Chatbot & Analytics](Screenshot%202025-06-22%20at%2011.58.50.png)
+
 ## 🎯 Key Features
 
 ### 🛰️ Real-Time Fire Detection
