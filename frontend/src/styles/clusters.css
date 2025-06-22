@@ -1,0 +1,119 @@
+/* Fire Detection Cluster Styles */
+.fire-cluster-small, .fire-cluster-medium, .fire-cluster-large {
+  background: #FF385C;
+  border: 1px solid #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+  color: white;
+  transition: all 0.15s ease;
+  text-align: center;
+  line-height: 1;
+}
+
+.fire-cluster-small > div, .fire-cluster-medium > div, .fire-cluster-large > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.fire-cluster-small span, .fire-cluster-medium span, .fire-cluster-large span {
+  display: block;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+}
+
+.fire-cluster-small:hover, .fire-cluster-medium:hover, .fire-cluster-large:hover {
+  transform: scale(1.05);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.fire-cluster-small {
+  width: 24px;
+  height: 24px;
+  font-size: 9px;
+}
+
+.fire-cluster-medium {
+  width: 28px;
+  height: 28px;
+  font-size: 10px;
+}
+
+.fire-cluster-large {
+  width: 32px;
+  height: 32px;
+  font-size: 11px;
+}
+
+/* Prediction Cluster Styles */
+.prediction-cluster-small, .prediction-cluster-medium, .prediction-cluster-large {
+  background: #F59E0B;
+  border: 1px solid #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+  color: white;
+  transition: all 0.15s ease;
+  text-align: center;
+  line-height: 1;
+}
+
+.prediction-cluster-small > div, .prediction-cluster-medium > div, .prediction-cluster-large > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.prediction-cluster-small span, .prediction-cluster-medium span, .prediction-cluster-large span {
+  display: block;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+}
+
+.prediction-cluster-small:hover, .prediction-cluster-medium:hover, .prediction-cluster-large:hover {
+  transform: scale(1.05);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.prediction-cluster-small {
+  width: 22px;
+  height: 22px;
+  font-size: 8px;
+}
+
+.prediction-cluster-medium {
+  width: 26px;
+  height: 26px;
+  font-size: 9px;
+}
+
+.prediction-cluster-large {
+  width: 30px;
+  height: 30px;
+  font-size: 10px;
+}
+
+/* Ensure cluster icons are always on top */
+.leaflet-marker-icon.fire-cluster-small,
+.leaflet-marker-icon.fire-cluster-medium,
+.leaflet-marker-icon.fire-cluster-large,
+.leaflet-marker-icon.prediction-cluster-small,
+.leaflet-marker-icon.prediction-cluster-medium,
+.leaflet-marker-icon.prediction-cluster-large {
+  z-index: 1000 !important;
+}

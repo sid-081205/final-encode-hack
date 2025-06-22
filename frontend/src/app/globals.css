@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Professional Fire Marker Styling */
+.fire-marker {
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
+  animation: none !important;
+}
+
+.fire-marker:hover {
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.25));
+}
+
+/* Prevent any Leaflet animations on fire markers */
+.leaflet-zoom-anim .fire-marker {
+  animation: none !important;
+  transition: none !important;
+}
+
+.leaflet-marker-pane .fire-marker {
+  animation: none !important;
+}
+
+/* Professional Prediction Marker Styling */
+.prediction-marker {
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
+  animation: none !important;
+}
+
+.prediction-marker:hover {
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.25));
+}
+
+/* Prevent any Leaflet animations on prediction markers */
+.leaflet-zoom-anim .prediction-marker {
+  animation: none !important;
+  transition: none !important;
+}
+
+.leaflet-marker-pane .prediction-marker {
+  animation: none !important;
+}
+
+@layer base {
+  html {
+    font-family: 'JetBrains Mono', monospace;
+  }
+  
+  body {
+    @apply bg-ash-light text-charcoal;
+  }
+  
+  * {
+    @apply text-sm tracking-wider;
+    text-transform: lowercase;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-code font-semibold;
+    text-transform: lowercase;
+  }
+  
+  .leaflet-container {
+    height: 100%;
+    width: 100%;
+  }
+}
+
+@layer components {
+  .nav-link {
+    @apply px-4 py-2 rounded-full transition-all duration-200 hover:bg-charcoal hover:text-white;
+  }
+  
+  .nav-link.active {
+    @apply bg-fire-red text-white;
+  }
+  
+  .filter-card {
+    @apply bg-white rounded-lg shadow-sm border border-gray-200 p-4 mb-4;
+  }
+  
+  .fire-marker {
+    @apply w-3 h-3 bg-fire-red rounded-full animate-pulse-fire;
+  }
+  
+  .btn-primary {
+    @apply bg-fire-red text-white px-6 py-3 rounded-lg font-medium hover:bg-red-600 transition-colors duration-200;
+  }
+  
+  .btn-secondary {
+    @apply bg-white text-charcoal border border-gray-300 px-6 py-3 rounded-lg font-medium hover:bg-gray-50 transition-colors duration-200;
+  }
+  
+  .fire-detection-tile {
+    @apply bg-white rounded-lg shadow-sm border border-gray-200 p-4 mb-3 hover:shadow-md transition-shadow duration-200;
+    min-height: 140px;
+  }
+  
+  .stats-card {
+    @apply bg-white rounded-lg shadow-sm border border-gray-200 p-6;
+  }
+}
