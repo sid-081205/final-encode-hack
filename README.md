@@ -22,14 +22,11 @@ An integrated platform that combines:
 
 ## 📸 Screenshots
 
-### Fire Detection Dashboard
-![Image #1]
+![Screenshot 2025-06-22 at 11.58.12](Screenshot%202025-06-22%20at%2011.58.12.png)
 
-### Fire Prediction Interface
-![Image #2]
+![Screenshot 2025-06-22 at 11.58.24](Screenshot%202025-06-22%20at%2011.58.24.png)
 
-### AI Chatbot & Analytics
-![Image #3]
+![Screenshot 2025-06-22 at 11.58.50](Screenshot%202025-06-22%20at%2011.58.50.png)
 
 ## 🎯 Key Features
 
