@@ -1,11 +1,6 @@
 # stubble burning detection & prediction system
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/downloads/)
-[![Next.js](https://img.shields.io/badge/Next.js-14-black.svg)](https://nextjs.org/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-green.svg)](https://fastapi.tiangolo.com/)
-
-ai-powered fire detection and prediction system for northern india using satellite data, ml models, and real-time monitoring.
+made for the encode hackathon! ai-powered stubble fire detection and prediction system for northern india using satellite data, ml models, and real-time monitoring.
 
 ## architecture
 
@@ -113,7 +108,3 @@ POST /api/chat/generate-prediction-report # generate pdf
 **features**: 18 parameters (weather, crop patterns, historical data)  
 **accuracy**: 89.2% overall, 85.7% precision, 92.1% recall  
 **coverage**: northern india, 7-day predictions, ~11km resolution
-
-## license
-
-mit license
