@@ -73,7 +73,7 @@ git clone <repository-url>
 cd final-encode-hack
 
 # the easy way to run everything
-run ./start_system.sh for automatic running
+./start_system.sh
 ```
 ### the manual way if you're into making your life more difficult:
 ```bash
