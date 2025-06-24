@@ -69,7 +69,7 @@ Get fire statistics for analysis
 #### GET /api/fires/regions
 List available regions
 
-## 🎯 Fire Prediction System
+## 🎯 ML Fire Prediction System
 
 ### ML-Powered Predictions
 - **Algorithm**: Random Forest + LSTM ensemble
