@@ -19,12 +19,15 @@ we pulled in remote sensing data (modis / sentinel-2) + combined it with weather
 ![Screenshot 2025-06-22 at 11.58.24](Screenshot%202025-06-22%20at%2011.58.24.png)
 
 **ML model outputs locations where a fire might occur**
+
 ![Screenshot 2025-06-23 at 15.24.48](Screenshot%202025-06-23%20at%2015.24.48.png)
 
 **chatbot allows for interaction with the website and development of reports for local authorities**
+
 ![Screenshot 2025-06-23 at 15.25.40](Screenshot%202025-06-23%20at%2015.25.40.png)
 
 **an awareness page**
+
 ![Screenshot 2025-06-22 at 11.58.50](Screenshot%202025-06-22%20at%2011.58.50.png)
 
 ## features
