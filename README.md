@@ -1,4 +1,6 @@
-# stubble burning detection & prediction system (made for the encode hackathon!)
+# stubble burning detection & prediction system 
+
+made at the encode hackathon
 
 ai-powered stubble fire detection and prediction system for northern india using satellite data, ml models, and real-time monitoring.
 
